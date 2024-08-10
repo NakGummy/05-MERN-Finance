@@ -1,0 +1,11 @@
+@import url(https://fonts.googleapis.com/earlyaccess/nicomoji.css);
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  font-family: "Nico Moji";
+  background-color: #1f2026;
+}

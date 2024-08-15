@@ -35,6 +35,7 @@ const Navbar = (props: Props) => {
             dashboard
           </Link>
         </Box>
+
         {/* Box for predictions */}
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
           <Link
@@ -46,6 +47,20 @@ const Navbar = (props: Props) => {
             }}
           >
             predictions
+          </Link>
+        </Box>
+
+        {/* Box for unching */}
+        <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
+          <Link
+            to="/unknown"
+            onClick={() => setSelected("unkonow")}
+            style={{
+              color: selected === "unkonow" ? "inherit" : palette.grey[700],
+              textDecoration: "inherit",
+            }}
+          >
+            unknown
           </Link>
         </Box>
       </FlexBetween>

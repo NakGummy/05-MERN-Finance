@@ -1,18 +1,77 @@
 import DashboardBox from "@/components/DashboardBox";
 import { useGetKpisQuery } from "@/state/api";
-import { AreaChart, ResponsiveContainer } from "recharts";
+import { useTheme } from "@mui/material";
+import { useMemo } from "react";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 type Props = {};
 
 const Row1 = (props: Props) => {
+  const { palette } = useTheme();
   const { data } = useGetKpisQuery();
   console.log("🚀 ~ Row1 ~ data:", data);
+
+  const revenueExpenses = useMemo(() => {
+    return (
+      data &&
+      data[0].monthlyData.map(({ month, revenue, expenses }) => {
+        return {
+          name: month.substring(0, 3),
+          revenue: revenue,
+          expenses: expenses,
+        };
+      })
+    );
+  }, [data]);
 
   return (
     <>
       <DashboardBox gridArea={"a"}>
         <ResponsiveContainer width={`100%`} height={`100%`}>
-          <AreaChart></AreaChart>
+          <AreaChart
+            width={500}
+            height={400}
+            data={revenueExpenses}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <CartesianGrid strokeDasharray={`3 3`} />
+            <XAxis dataKey={`name`} />
+            <YAxis />
+            <Tooltip />
+
+            {/* Revenue Graph */}
+            <Area
+              type={`monotone`}
+              dataKey={`revenue`}
+              dot={true}
+              stroke={palette.primary.main}
+              fillOpacity={1}
+              fill={`url(#colorRevenue)`}
+            />
+
+            {/* Expenses Graph */}
+            <Area
+              type={`monotone`}
+              dot={true}
+              dataKey={`expenses`}
+              stroke={palette.primary.main}
+              fillOpacity={1}
+              fill={`url(#colorRevenue)`}
+            />
+          </AreaChart>
         </ResponsiveContainer>
       </DashboardBox>
       <DashboardBox gridArea={"b"}></DashboardBox>

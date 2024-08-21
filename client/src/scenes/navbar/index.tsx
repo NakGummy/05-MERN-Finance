@@ -50,6 +50,20 @@ const Navbar = (props: Props) => {
           </Link>
         </Box>
 
+        {/* Box for howto */}
+        <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
+          <Link
+            to="/howto"
+            onClick={() => setSelected("howto")}
+            style={{
+              color: selected === "howto" ? "inherit" : palette.grey[700],
+              textDecoration: "inherit",
+            }}
+          >
+            howto
+          </Link>
+        </Box>
+
         {/* Box for unching */}
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
           <Link

@@ -17,11 +17,12 @@ import {
   Legend,
   BarChart,
 } from "recharts";
-import PixIcon from "@mui/icons-material/Pix";
 
-type Props = {};
+// Icon imports
 
-const Row1 = (props: Props) => {
+// Define Custom Tooltip
+
+const Row1 = () => {
   const { palette } = useTheme();
   const { data } = useGetKpisQuery();
   console.log("🚀 ~ Row1 ~ data:", data);

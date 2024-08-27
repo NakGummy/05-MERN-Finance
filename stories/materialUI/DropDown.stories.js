@@ -1,8 +1,8 @@
-import StringBox from "./StringBox";
+import DropDown from "./DropDown";
 
 export default {
-  title: "Material UI/StringBox",
-  component: StringBox,
+  title: "Material UI/DropDown",
+  component: DropDown,
   parameters: {
     layout: "centered",
   },

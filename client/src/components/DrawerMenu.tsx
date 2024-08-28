@@ -1,31 +1,27 @@
-import {
-  Box,
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  SwipeableDrawer,
-} from "@mui/material";
-import { useState } from "react";
-import InboxIcon from "@mui/icons-material/Inbox";
-import MailIcon from "@mui/icons-material/Mail";
 import React from "react";
+import Button from "@mui/material/Button";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
 
-type Anchor = "left";
+type Props = {
+  element: JSX.Element;
+};
 
-function Drawer() {
-  const [state, setState] = useState({
-    left: false,
-  });
+const Drawer = ({ element }: Props) => {
+  const [state, setState] = React.useState<{ [key: string]: boolean }>({});
 
   const toggleDrawer =
-    (anchor: Anchor, open: boolean) =>
+    (anchor: string, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
-        event &&
         event.type === "keydown" &&
         ((event as React.KeyboardEvent).key === "Tab" ||
           (event as React.KeyboardEvent).key === "Shift")
@@ -36,16 +32,15 @@ function Drawer() {
       setState({ ...state, [anchor]: open });
     };
 
-  const list = (anchor: Anchor) => {
+  const list = (anchor: string) => (
     <Box
       sx={{ width: 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      {/* List One */}
       <List>
-        {["Inbox", "Starred", "Send Mail", "Drafts"].map((text, index) => (
+        {["All Mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -57,11 +52,9 @@ function Drawer() {
         ))}
       </List>
       <Divider />
-
-      {/* List Two */}
       <List>
         {["All Mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={anchor} disablePadding>
+          <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -71,26 +64,26 @@ function Drawer() {
           </ListItem>
         ))}
       </List>
-    </Box>;
-  };
+    </Box>
+  );
 
   return (
     <div>
-      {(["left"] as const).map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+      {[{ element: element, key: "pixicon" }].map(({ element, key }) => (
+        <React.Fragment key={key}>
+          <Button onClick={toggleDrawer(key, true)}>{element}</Button>
           <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
+            anchor="left"
+            open={state[key]}
+            onClose={toggleDrawer(key, false)}
+            onOpen={toggleDrawer(key, true)}
           >
-            {list(anchor)}
-          </SwipeDrawer>
+            {list(key)}
+          </SwipeableDrawer>
         </React.Fragment>
       ))}
     </div>
   );
-}
+};
 
 export default Drawer;
